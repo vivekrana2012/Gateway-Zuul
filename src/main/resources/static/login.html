@@ -1,0 +1,24 @@
+<html ng-app="app">
+<head></head>
+<body ng-controller="application_controller">
+<h1>Login</h1>
+<form>
+    <table>
+        <tr>
+            <td>User:</td>
+            <td><input ng-model="username" type='text' name='username' value=''></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input ng-model="password" type='password' name='password' /></td>
+        </tr>
+        <tr>
+            <td><input ng-click="submit()" name="submit" type="submit" value="submit" /></td>
+        </tr>
+    </table>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+<script src="login.js"></script>
+</body>
+</html>
