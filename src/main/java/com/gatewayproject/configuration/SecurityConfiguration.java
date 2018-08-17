@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     }
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(userDetailsService);
+//        auth.userDetailsService(userDetailsService);
         auth.inMemoryAuthentication().withUser("vivek@user.com").password("{noop}vivek").roles("USER");
     }
 }

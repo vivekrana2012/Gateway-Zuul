@@ -6,6 +6,7 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 public class User {
+    public User(){}
 
     public User(User user){
         this.user_id = user.getUser_id();

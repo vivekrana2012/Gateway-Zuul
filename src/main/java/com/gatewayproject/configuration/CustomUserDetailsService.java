@@ -13,13 +13,15 @@ import java.util.Arrays;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userRepository.findByUserName(username);
+        User user = new User();
+        user.setActive(0);
+        user.setEmail_id("");
+        user.setPassword("vivek");
+        user.setUser_id(1);
+        user.setUsername("vivek");
 
         if(null == user)
             throw new UsernameNotFoundException("No user present with username: "+username);

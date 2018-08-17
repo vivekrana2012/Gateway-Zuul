@@ -5,8 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-//@EntityScan("com.gatewayproject.repository.UserRepository")
-//@EnableJpaRepositories("com.gatewayproject.repository")
 @SpringBootApplication
 public class GatewayApplication {
 
