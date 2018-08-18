@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @EnableWebSecurity
@@ -17,6 +19,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -38,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     }
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-//        auth.userDetailsService(userDetailsService);
-        auth.inMemoryAuthentication().withUser("vivek@user.com").password("{noop}vivek").roles("USER");
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//        auth.inMemoryAuthentication().withUser("vivek@user.com").password("{noop}vivek").roles("USER");
     }
 }
