@@ -1,5 +1,7 @@
 package com.gatewayproject.configuration;
 
+import com.gatewayproject.model.User;
+import com.gatewayproject.repository.CustomUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,12 +19,17 @@ import java.util.List;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
+    private CustomUserRepository userRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 
-        if(!"vivek".equals(username))
+        User user = userRepository.findByUsername(username);
+
+        if(!user.getUsername().equals(username))
             throw new UsernameNotFoundException("No user present with username: "+username);
         else
             return new UserDetails() {
@@ -35,32 +42,32 @@ public class CustomUserDetailsService implements UserDetailsService {
 
                 @Override
                 public String getPassword() {
-                    return passwordEncoder.encode("vivek");
+                    return passwordEncoder.encode(user.getPassword());
                 }
 
                 @Override
                 public String getUsername() {
-                    return "vivek";
+                    return user.getUsername();
                 }
 
                 @Override
                 public boolean isAccountNonExpired() {
-                    return true;
+                    return user.isIs_active();
                 }
 
                 @Override
                 public boolean isAccountNonLocked() {
-                    return true;
+                    return user.isIs_active();
                 }
 
                 @Override
                 public boolean isCredentialsNonExpired() {
-                    return true;
+                    return user.isIs_active();
                 }
 
                 @Override
                 public boolean isEnabled() {
-                    return true;
+                    return user.isIs_active();
                 }
             };
     }
