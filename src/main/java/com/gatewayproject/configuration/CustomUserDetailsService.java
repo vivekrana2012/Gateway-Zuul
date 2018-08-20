@@ -1,7 +1,9 @@
 package com.gatewayproject.configuration;
 
 import com.gatewayproject.model.User;
+import com.gatewayproject.model.User_Role;
 import com.gatewayproject.repository.CustomUserRepository;
+import com.gatewayproject.repository.CustomUserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,7 +24,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     private CustomUserRepository userRepository;
 
     @Autowired
+    private CustomUserRoleRepository customUserRoleRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    private List<User_Role> user_roles;
 
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
@@ -32,11 +39,16 @@ public class CustomUserDetailsService implements UserDetailsService {
         if(!user.getUsername().equals(username))
             throw new UsernameNotFoundException("No user present with username: "+username);
         else
+
+            user_roles = customUserRoleRepository.findByEmailId(user.getEmail_id());
+
             return new UserDetails() {
                 @Override
                 public Collection<? extends GrantedAuthority> getAuthorities() {
                     List<SimpleGrantedAuthority> auths = new java.util.ArrayList<SimpleGrantedAuthority>();
-                    auths.add(new SimpleGrantedAuthority("Admin"));
+                    for(int counter = 0; counter < user_roles.size(); counter++){
+                        auths.add(new SimpleGrantedAuthority(user_roles.get(counter).getRole_name()));
+                    }
                     return auths;
                 }
 

@@ -33,6 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                     .permitAll()
                     .antMatchers("/home")
                     .authenticated()
+                    .antMatchers("/home").hasRole("USER")
                     .and()
                 .formLogin()
                     .loginPage("/login")
