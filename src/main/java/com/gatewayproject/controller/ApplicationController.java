@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import javax.xml.ws.RequestWrapper;
 
 @Controller
@@ -17,7 +18,13 @@ public class ApplicationController {
     }
 
     @GetMapping("/home")
-    public String home(){
+    public String home(HttpSession session){
         return "home.html";
     }
+
+    @RequestMapping("/logout")
+    public String logout(HttpSession session){
+        System.out.println("logging out");
+        session.invalidate();
+        return "login.html";}
 }
